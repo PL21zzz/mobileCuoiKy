@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DetailActivity"
+    tools:ignore="ContentDescription, HardcodedText, UseCompatTextViewDrawableXml"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBarDetail"
+        app:title="Chi tiết sản phẩm"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/textColor"
+        app:titleTextColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <FrameLayout
+            android:id="@+id/frameCart"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_width="54dp"
+            android:layout_height="?attr/actionBarSize"
+            tools:ignore="RtlHardcoded">
+
+            <com.nex3z.notificationbadge.NotificationBadge
+                android:id="@+id/menu_qtt"
+                android:layout_gravity="top|right"
+                android:layout_width="28dp"
+                android:layout_height="28dp"/>
+
+            <ImageView
+                android:src="@drawable/cart_24"
+                android:layout_marginTop="15dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/imageDetail"
+        android:layout_marginVertical="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/white"
+        android:src="@drawable/ip"
+        app:layout_constraintBottom_toTopOf="@+id/line1"
+        app:layout_constraintTop_toBottomOf="@+id/toolBarDetail" />
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="5"
+        android:orientation="vertical"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/imageDetail"
+        app:layout_constraintBottom_toTopOf="@id/btnAddCard"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:id="@+id/txtPrdNameDT"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="iphone 15 pro max"
+            android:textAllCaps="true"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtDescribeDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textStyle="italic"
+            android:padding="20dp"
+            android:text="@string/lorem"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txtPrdPriceDT"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:drawableStart="@drawable/attach_money_24"
+            android:textColor="@color/red"
+            android:text="25000VND"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnAddCard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Thêm vào giỏ hàng"
+        android:backgroundTint="@color/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

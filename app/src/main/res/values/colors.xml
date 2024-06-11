@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="textColor">#FF03DAC5</color>
+    <color name="resetPass">#FF6600</color>
+    <color name="btn">#33CC33</color>
+    <color name="red">#FF0000</color>
+    <color name="ccc">#CCCCCC</color>
+    <color name="ttc">#fdf588</color>
+    <color name="bgdDT">#3d81af</color>
+
+    <color name="text_color">#1E4175</color>
+    <color name="background_color">#ecf0f3</color>
+    <color name="highlight">#ffffff</color>
+    <color name="shadow_color">#d9dbde</color>
+</resources>

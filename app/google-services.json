@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "80259684256",
+    "project_id": "sellproduct-31478",
+    "storage_bucket": "sellproduct-31478.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80259684256:android:6cbeec9f7f67d9d67fb6c5",
+        "android_client_info": {
+          "package_name": "com.manager.helo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3jwm7pf4hicoTKeBon7NVY8pZF0DXHng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

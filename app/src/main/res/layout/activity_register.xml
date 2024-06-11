@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient"
+    android:paddingTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ContentDescription, HardcodedText, RtlSymmetry, UseCompoundDrawables"
+    tools:context=".activity.RegisterActivity">
+
+<!--    <TextView-->
+<!--        android:id="@+id/txtRegister"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:text="@string/Register"-->
+<!--        android:textSize="50sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="5dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+    <LinearLayout
+        android:id="@+id/line8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/line5"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/txtRegister"
+            android:layout_gravity="center"
+            android:src="@drawable/person_24"
+            android:background="@drawable/rounded"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <TextView
+            android:id="@+id/txtRegister"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:textStyle="italic"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:paddingBottom="5dp"
+            android:text="register now"
+            app:layout_constraintBottom_toTopOf="@+id/line5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/line5"
+        android:layout_margin="10dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toBottomOf="@+id/line8"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailRegister"
+            android:hint="@string/email"
+            android:background="@drawable/shadow"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/ic_email_24"
+            android:drawablePadding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/line1"
+        android:layout_margin="10dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toBottomOf="@+id/line5"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNameRegister"
+            android:hint="@string/user_name"
+            android:inputType="text"
+            android:background="@drawable/shadow"
+            android:drawableStart="@drawable/person_24"
+            android:drawablePadding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/line2"
+        android:background="@drawable/shadow"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/line1"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordRegister"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:background="@drawable/shadow"
+            android:drawableStart="@drawable/ic_key_24"
+            android:drawablePadding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/line3"
+        android:layout_margin="10dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toBottomOf="@+id/line2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/rePassRegister"
+            android:hint="@string/recent_password"
+            android:inputType="textPassword"
+            android:background="@drawable/shadow"
+            android:drawableStart="@drawable/ic_key_24"
+            android:drawablePadding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/line4"
+        android:layout_margin="10dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toBottomOf="@+id/line3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phoneNumberRegister"
+            android:hint="@string/sdt"
+            android:inputType="text"
+            android:background="@drawable/shadow"
+            android:drawableStart="@drawable/phone_24"
+            android:drawablePadding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnRegister"
+        app:layout_constraintTop_toBottomOf="@+id/line4"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/Register"
+        android:backgroundTint="@color/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

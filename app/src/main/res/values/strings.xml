@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">helo</string>
+    <string name="login">Đăng nhập</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="noUser">Chua có tài khoản?</string>
+    <string name="RegisterNow">Đăng ký ngay</string>
+    <string name="Register">Đăng ký</string>
+    <string name="sdt">phone_number</string>
+    <string name="user_name">user_name</string>
+    <string name="no_product_in_cart">Không có sản phẩm trong giỏ hàng</string>
+    <string name="recent_password">Recent password</string>
+    <string name="resetPass">Quên mật khẩu</string>
+    <string name="totalCoin">Tổng tiền: </string>
+    <string name="k25"> 25000Đ</string>
+    <string name="myPhoneNum">0348751577</string>
+    <string name="todo">TODO</string>
+    <string name="emailEX">phong1@gmail.com</string>
+    <string name="inpLocation">Nhập địa chỉ giao hàng</string>
+    <string name="pay">Đặt hàng</string>
+    <string name="del">xóa</string>
+    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry standard dummy text ever since the 1500s</string>
+</resources>
