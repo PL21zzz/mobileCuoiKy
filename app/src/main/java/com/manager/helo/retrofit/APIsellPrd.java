@@ -38,7 +38,8 @@ public interface APIsellPrd {
             @Field("email") String email,
             @Field("password") String password,
             @Field("user_name") String user_name,
-            @Field("phone_number") String phone_number
+            @Field("phone_number") String phone_number,
+            @Field("uid") String uid
     );
 
     @POST("login.php")
@@ -97,6 +98,13 @@ public interface APIsellPrd {
             @Field("product_price") String product_price,
             @Field("product_describe") String product_describe,
             @Field("id") int id
+    );
+
+    @POST("updateToken.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateToken(
+            @Field("id") int id,
+            @Field("token") String token
     );
 
     @Multipart

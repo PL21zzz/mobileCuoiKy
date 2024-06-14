@@ -2,6 +2,7 @@ package com.manager.helo.activity;
 
 import static com.manager.helo.R.*;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.manager.helo.R;
 import com.manager.helo.Utils.Utils;
 import com.manager.helo.retrofit.APIsellPrd;
@@ -24,6 +30,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class RegisterActivity extends AppCompatActivity {
     EditText emailRegister, passwordRegister, rePassRegister, phoneNumberRegister, userNameRegister;
     Button btnRegister;
+    FirebaseAuth firebaseAuth;
     APIsellPrd apiSellPrd;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -64,30 +71,48 @@ public class RegisterActivity extends AppCompatActivity {
         }else {
             if (pass.equals(rePass)){
                 //post data
-                compositeDisposable.add(apiSellPrd.register(email, pass, userName, phoneNum)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                userModel -> {
-                                    if (userModel.isSuccess()){
-//                                        Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
-                                        Utils.userCurrent.setEmail(email);
-                                        Utils.userCurrent.setPassword(pass);
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.createUserWithEmailAndPassword(email, pass)
+                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    if (user != null) {
+                                        postData(email, pass, userName, phoneNum, user.getUid());
                                     }else {
-                                        Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Email đã tồn tại", Toast.LENGTH_SHORT).show();
                                     }
-                                },
-                                throwable -> {
-                                    Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                        ));
+                            }
+                        });
             }else {
                 Toast.makeText(getApplicationContext(), "pass và Repass không giống nhau!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void postData(String email, String pass, String userName, String phoneNum, String uid) {
+        compositeDisposable.add(apiSellPrd.register(email, pass, userName, phoneNum, uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()){
+//                                        Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
+                                Utils.userCurrent.setEmail(email);
+                                Utils.userCurrent.setPassword(pass);
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                ));
     }
 
     private void initView() {

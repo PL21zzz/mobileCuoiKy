@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,6 +25,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.manager.helo.R;
 import com.manager.helo.adapter.NewProductAdapter;
 import com.manager.helo.adapter.ProductTypeAdapter;
@@ -75,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
         mapping();
         actionBar();
+        getToken();
 
         if (isConnected(this)) {
-
             actionViewFlipper();
             getPrdType();
             getNewPrd();
@@ -85,6 +90,28 @@ public class MainActivity extends AppCompatActivity {
         }else {
             Toast.makeText(getApplicationContext(), "No internet", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        if (!TextUtils.isEmpty(s)) {
+                            compositeDisposable.add(apisellPrd.updateToken(Utils.userCurrent.getId(), s)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            messageModel -> {
+
+                                            },
+                                            throwable -> {
+                                                Log.d("logg", throwable.getMessage());
+                                            }
+                                    ));
+                        }
+                    }
+                });
     }
 
     private void getEventClicked() {
@@ -116,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 7:
                         Paper.book().delete("user");
+                        FirebaseAuth.getInstance().signOut();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();

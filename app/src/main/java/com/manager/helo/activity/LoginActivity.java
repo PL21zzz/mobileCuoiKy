@@ -1,5 +1,6 @@
 package com.manager.helo.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.manager.helo.R;
 import com.manager.helo.Utils.Utils;
 import com.manager.helo.retrofit.APIsellPrd;
@@ -26,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView txtRegisterNow;
     EditText emailLogin, passLogin;
     Button btnLogin;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
     APIsellPrd apiSellPrd;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     boolean isLogin = false;
@@ -60,7 +68,19 @@ public class LoginActivity extends AppCompatActivity {
                     //save
                     Paper.book().write("email", email);
                     Paper.book().write("pass", pass);
-                    login(email, pass);
+                    if (user != null) {
+                        login(email, pass);
+                    }else {
+                        firebaseAuth.signInWithEmailAndPassword(email, pass)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            login(email, pass);
+                                        }
+                                    }
+                                });
+                    }
                 }
             }
         });
@@ -73,6 +93,8 @@ public class LoginActivity extends AppCompatActivity {
         emailLogin = findViewById(R.id.emailLogin);
         passLogin = findViewById(R.id.passLogin);
         btnLogin = findViewById(R.id.btnLogin);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
 
         //read data
         if (Paper.book().read("email") != null && Paper.book().read("pass") != null) {
