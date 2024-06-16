@@ -84,4 +84,6 @@ dependencies {
     implementation ("androidx.multidex:multidex:2.0.1")
     //imagePicker
     implementation ("com.github.dhaval2404:imagepicker:2.1")
+    implementation ("com.google.android.gms:play-services-safetynet:18.0.1")
+
 }

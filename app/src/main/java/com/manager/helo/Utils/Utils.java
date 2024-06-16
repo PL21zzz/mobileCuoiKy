@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
-    public static final String baseURL = "http://192.168.1.18/appBanHang/";
+    public static final String baseURL = "http://192.168.1.218/appBanHang/";
     public static List<Cart> arrCard;
     public static List<Cart> arrBuyCard = new ArrayList<>();
     public static User userCurrent = new User();

@@ -1,5 +1,7 @@
 package com.manager.helo.activity;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -25,6 +28,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.safetynet.SafetyNet;
+import com.google.android.gms.safetynet.SafetyNetApi;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -46,6 +52,7 @@ import java.util.Objects;
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     NotificationBadge badge;
     FrameLayout frameCart;
     ImageView imgSearch;
+    private static final String SITE_KEY = "6LdiDvkpAAAAAABRIDGESnZFV7iH2pXD3lDYCmoJklF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +85,9 @@ public class MainActivity extends AppCompatActivity {
         if (Paper.book().read("user") != null) {
             Utils.userCurrent = Paper.book().read("user");
         }
-
+        getToken();
         mapping();
         actionBar();
-        getToken();
 
         if (isConnected(this)) {
             actionViewFlipper();
@@ -93,23 +100,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getToken() {
-        FirebaseMessaging.getInstance().getToken()
-                .addOnSuccessListener(new OnSuccessListener<String>() {
+        SafetyNet.getClient(this).verifyWithRecaptcha(SITE_KEY)
+                .addOnSuccessListener(new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
                     @Override
-                    public void onSuccess(String s) {
-                        if (!TextUtils.isEmpty(s)) {
-                            compositeDisposable.add(apisellPrd.updateToken(Utils.userCurrent.getId(), s)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(
-                                            messageModel -> {
-
-                                            },
-                                            throwable -> {
-                                                Log.d("logg", throwable.getMessage());
+                    public void onSuccess(SafetyNetApi.RecaptchaTokenResponse response) {
+                        String userResponseToken = response.getTokenResult();
+                        if (!TextUtils.isEmpty(userResponseToken)) {
+                            FirebaseMessaging.getInstance().getToken()
+                                    .addOnSuccessListener(new OnSuccessListener<String>() {
+                                        @Override
+                                        public void onSuccess(String token) {
+                                            if (!TextUtils.isEmpty(token)) {
+                                                compositeDisposable.add(apisellPrd.updateToken(Utils.userCurrent.getId(), token)
+                                                        .subscribeOn(Schedulers.io())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .subscribe(
+                                                                messageModel -> {
+                                                                    // Xử lý khi cập nhật token thành công
+                                                                },
+                                                                throwable -> {
+                                                                    Log.d("logg", throwable.getMessage());
+                                                                }
+                                                        ));
                                             }
-                                    ));
+                                        }
+                                    });
+                        } else {
+                            Log.e(TAG, "Empty reCAPTCHA token");
                         }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Error verifying reCAPTCHA", e);
                     }
                 });
     }
@@ -287,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        compositeDisposable.clear();
         super.onDestroy();
     }
 }
